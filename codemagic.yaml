@@ -1,0 +1,17 @@
+workflows:
+  android-workflow:
+    name: Ahmodia Android Build
+    max_build_duration: 60
+    environment:
+      flutter: stable
+    scripts:
+      - name: Get Flutter packages
+        script: |
+          cd $CM_BUILD_DIR/ahmodia_app
+          flutter pub get
+      - name: Build APK
+        script: |
+          cd $CM_BUILD_DIR/ahmodia_app
+          flutter build apk --debug
+    artifacts:
+      - ahmodia_app/build/**/outputs/**/*.apk
