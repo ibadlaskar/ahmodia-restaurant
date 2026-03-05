@@ -1,23 +1,12 @@
 // lib/main.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:provider/provider.dart';
 import 'theme/app_theme.dart';
 import 'providers/cart_provider.dart';
 import 'screens/screens.dart';
 import 'services/firebase_service.dart';
-
-// 🔴 IMPORTANT: Replace this with your actual Firebase config
-// Get it from: Firebase Console → Project Settings → Your apps → Web app config
-// Then paste the values below
-const firebaseOptions = FirebaseOptions(
-  apiKey:            'YOUR_API_KEY',
-  appId:             'YOUR_APP_ID',
-  messagingSenderId: 'YOUR_MESSAGING_SENDER_ID',
-  projectId:         'YOUR_PROJECT_ID',
-  storageBucket:     'YOUR_STORAGE_BUCKET',
-);
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,9 +22,6 @@ void main() async {
     statusBarColor: Colors.transparent,
     statusBarIconBrightness: Brightness.light,
   ));
-
-  // Initialize Firebase
-  await Firebase.initializeApp(options: firebaseOptions);
 
   runApp(const AhmodiaApp());
 }
