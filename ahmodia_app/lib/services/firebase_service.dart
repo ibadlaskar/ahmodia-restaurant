@@ -67,7 +67,7 @@ class FirebaseService {
   // ── ORDERS ─────────────────────────────────────────────────
   static Future<String> placeOrder(OrderModel order) async {
     final docRef = _firestore.collection('orders').doc();
-    final finalOrder = order..orderId == order.orderId;
+    
     await docRef.set(order.toFirestore());
 
     // Update user stats
