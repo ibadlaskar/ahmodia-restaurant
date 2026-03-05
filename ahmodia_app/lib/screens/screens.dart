@@ -1,4 +1,4 @@
-// lib/screens/home_screen.dart
+// lib/screens/screens.dart
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +7,7 @@ import '../models/models.dart';
 import '../providers/cart_provider.dart';
 import '../widgets/widgets.dart';
 import 'package:flutter/services.dart';
-
+import '../services/firebase_service.dart';
 // ─────────────────────────────────────────────────────────────
 // MAIN SHELL  (Bottom Nav + Pages)
 // ─────────────────────────────────────────────────────────────
@@ -1513,6 +1513,3 @@ class _ProfileScreenState extends State<ProfileScreen> {
     )),
   );
 }
-
-// Import needed in this file
-import '../services/firebase_service.dart';
