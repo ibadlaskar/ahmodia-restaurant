@@ -10,43 +10,13 @@ workflows:
         script: |
           cd $CM_BUILD_DIR/ahmodia_app
           flutter pub get
-
       - name: Generate launcher icons
         script: |
-          python3 << 'PYTHON'
-import os
-from PIL import Image, ImageDraw
-
-def make_icon(size, path):
-    img = Image.new('RGBA', (size, size), (0,0,0,0))
-    draw = ImageDraw.Draw(img)
-    r = size // 8
-    draw.rounded_rectangle([0, 0, size-1, size-1], radius=r, fill=(27, 67, 50, 255))
-    m = size // 5
-    draw.ellipse([m, m, size-m, size-m], fill=(240, 165, 0, 255))
-    draw.ellipse([m+4, m+4, size-m-4, size-m-4], fill=(250, 245, 235, 255))
-    cx, cy = size//2, size//2
-    draw.ellipse([cx-size//4, cy-size//6, cx+size//4, cy+size//8], fill=(255, 252, 240, 255))
-    draw.ellipse([cx-size//5, cy-size//7, cx, cy+size//12], fill=(180, 80, 30, 200))
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    img.save(path, 'PNG')
-
-base = os.environ['CM_BUILD_DIR'] + '/ahmodia_app/android/app/src/main/res'
-sizes = {
-    'mipmap-mdpi': 48, 'mipmap-hdpi': 72,
-    'mipmap-xhdpi': 96, 'mipmap-xxhdpi': 144, 'mipmap-xxxhdpi': 192,
-}
-for folder, size in sizes.items():
-    make_icon(size, f'{base}/{folder}/ic_launcher.png')
-    make_icon(size, f'{base}/{folder}/ic_launcher_round.png')
-    print(f'Created {folder} {size}px')
-print('Icons done!')
-PYTHON
-
+          chmod +x $CM_BUILD_DIR/generate_icons.sh
+          $CM_BUILD_DIR/generate_icons.sh
       - name: Build APK
         script: |
           cd $CM_BUILD_DIR/ahmodia_app
           flutter build apk --debug
-
     artifacts:
       - ahmodia_app/build/**/outputs/**/*.apk
