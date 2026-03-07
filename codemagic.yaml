@@ -12,8 +12,19 @@ workflows:
           flutter pub get
       - name: Generate launcher icons
         script: |
-          chmod +x $CM_BUILD_DIR/generate_icons.sh
-          $CM_BUILD_DIR/generate_icons.sh
+          RES="$CM_BUILD_DIR/ahmodia_app/android/app/src/main/res"
+          for folder in mipmap-mdpi mipmap-hdpi mipmap-xhdpi mipmap-xxhdpi mipmap-xxxhdpi; do
+            mkdir -p "$RES/$folder"
+          done
+          convert -size 48x48 xc:"#1B4332" -fill "#F0A500" -draw "circle 24,24 24,8" -fill "#FFFCF0" -draw "circle 24,24 24,10" "$RES/mipmap-mdpi/ic_launcher.png"
+          convert -size 72x72 xc:"#1B4332" -fill "#F0A500" -draw "circle 36,36 36,12" -fill "#FFFCF0" -draw "circle 36,36 36,15" "$RES/mipmap-hdpi/ic_launcher.png"
+          convert -size 96x96 xc:"#1B4332" -fill "#F0A500" -draw "circle 48,48 48,16" -fill "#FFFCF0" -draw "circle 48,48 48,20" "$RES/mipmap-xhdpi/ic_launcher.png"
+          convert -size 144x144 xc:"#1B4332" -fill "#F0A500" -draw "circle 72,72 72,24" -fill "#FFFCF0" -draw "circle 72,72 72,30" "$RES/mipmap-xxhdpi/ic_launcher.png"
+          convert -size 192x192 xc:"#1B4332" -fill "#F0A500" -draw "circle 96,96 96,32" -fill "#FFFCF0" -draw "circle 96,96 96,40" "$RES/mipmap-xxxhdpi/ic_launcher.png"
+          for folder in mipmap-mdpi mipmap-hdpi mipmap-xhdpi mipmap-xxhdpi mipmap-xxxhdpi; do
+            cp "$RES/$folder/ic_launcher.png" "$RES/$folder/ic_launcher_round.png"
+          done
+          echo "Icons created!"
       - name: Build APK
         script: |
           cd $CM_BUILD_DIR/ahmodia_app
